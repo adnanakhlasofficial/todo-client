@@ -1,6 +1,15 @@
+import { useContext } from 'react';
 import { Link, NavLink } from 'react-router-dom';
+import { AuthContext } from '../../../Provider/AuthProvider';
 
 const Navbar = () => {
+  const { googleLogin } = useContext(AuthContext);
+
+  async function googleSingIn() {
+    const { user } = await googleLogin();
+    console.log(user);
+  }
+
   return (
     <nav className='container mx-auto px-4 flex justify-between items-center py-4'>
       <div>
@@ -17,12 +26,12 @@ const Navbar = () => {
             <NavLink to='/'>Contact</NavLink>
           </li>
           <li>
-            <Link
-              className='px-6 py-2 rounded-lg font-semibold bg-blue-400'
-              to='/singin'
+            <button
+              className='px-6 py-2 rounded-lg font-semibold bg-blue-400 hover:bg-blue-500 transition duration-300 hover:cursor-pointer '
+              onClick={googleSingIn}
             >
               Sign In
-            </Link>
+            </button>
           </li>
         </ul>
       </div>

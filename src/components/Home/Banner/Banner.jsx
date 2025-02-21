@@ -1,8 +1,4 @@
-import { useNavigate } from 'react-router-dom';
-
 const Banner = () => {
-  const navigate = useNavigate();
-
   return (
     <section
       className='min-h-[75vh] !bg-no-repeat !bg-cover !bg-center text-white flex justify-center items-center flex-col gap-4'
@@ -16,14 +12,6 @@ const Banner = () => {
           Manage your tasks effortlessly and stay on top of your goals.
           Organize, prioritize, and get things done with ease!
         </p>
-      </div>
-      <div>
-        <button
-          onClick={() => navigate('/singin')}
-          className='bg-blue-400 px-6 py-2 rounded-lg cursor-pointer'
-        >
-          Get Started
-        </button>
       </div>
     </section>
   );

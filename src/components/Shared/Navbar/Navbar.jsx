@@ -61,6 +61,9 @@ const Navbar = () => {
               <li>
                 <NavLink to="/add-task">Add Task</NavLink>
               </li>
+              <li>
+                <NavLink to="/task-board">Task Board</NavLink>
+              </li>
             </>
           )}
           <li>

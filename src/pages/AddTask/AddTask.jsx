@@ -1,6 +1,7 @@
 import axios from "axios";
 import { useForm } from "react-hook-form";
 import toast from "react-hot-toast";
+import { useNavigate } from "react-router-dom";
 
 const AddTask = () => {
   const {
@@ -8,14 +9,16 @@ const AddTask = () => {
     handleSubmit,
     formState: { errors },
   } = useForm();
+  const navigate = useNavigate();
 
   const onSubmit = async (data) => {
-    const taskInfo = { ...data, date: new Date(), category: "To-DO" };
+    const taskInfo = { ...data, date: new Date(), category: "todo" };
     console.log("Task Added:", taskInfo);
     // Save task to backend or local storage (if needed)
     try {
-      await axios.post(`${import.meta.env.VITE_API_URL}/add-task`, taskInfo);
+      await axios.post(`${import.meta.env.VITE_API_URL}/tasks`, taskInfo);
       toast.success("Task added successfully.");
+      navigate("/task-board");
     } catch (error) {
       toast.error("Something went wrong.");
       console.log(error);

@@ -3,8 +3,11 @@ import axios from "axios";
 import toast from "react-hot-toast";
 import { format } from "date-fns";
 import { MdDelete } from "react-icons/md"; // Import delete icon
+import { useContext } from "react";
+import { AuthContext } from "../../Provider/AuthProvider";
 
 const TaskBoard = () => {
+  const { user } = useContext(AuthContext);
   const queryClient = useQueryClient();
 
   const categories = [
@@ -22,7 +25,9 @@ const TaskBoard = () => {
     queryKey: ["tasks"],
     queryFn: async () => {
       try {
-        const { data } = await axios(`${import.meta.env.VITE_API_URL}/tasks`);
+        const { data } = await axios(
+          `${import.meta.env.VITE_API_URL}/tasks?email=${user?.email}`
+        );
         return data;
       } catch (error) {
         toast.error("Something went wrong.");
@@ -66,7 +71,7 @@ const TaskBoard = () => {
   if (isError) return <p>{error.message}</p>;
 
   return (
-    <div className="container mx-auto px-4 grid grid-cols-1 md:grid-cols-3 gap-4 p-4 min-h-[calc(100vh-14.5rem)]">
+    <div className="container mx-auto px-4 grid grid-cols-1 md:grid-cols-3 gap-4 p-4 min-h-[calc(100vh-8rem)]">
       {categories.map((category) => (
         <div
           key={category.status}
@@ -92,7 +97,7 @@ const TaskBoard = () => {
                   </button>
 
                   <div className="flex items-center space-x-2 mb-2">
-                    <h3 className="text-sm">{task._id}</h3>
+                    <h3 className="text-sm">{task?.user?.email}</h3>
                   </div>
                   <h4 className="font-bold">{task.title}</h4>
                   <p className="text-sm text-gray-600">{task.description}</p>

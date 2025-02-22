@@ -1,9 +1,12 @@
 import axios from "axios";
+import { useContext } from "react";
 import { useForm } from "react-hook-form";
 import toast from "react-hot-toast";
 import { useNavigate } from "react-router-dom";
+import { AuthContext } from "../../Provider/AuthProvider";
 
 const AddTask = () => {
+  const { user } = useContext(AuthContext);
   const {
     register,
     handleSubmit,
@@ -12,7 +15,12 @@ const AddTask = () => {
   const navigate = useNavigate();
 
   const onSubmit = async (data) => {
-    const taskInfo = { ...data, date: new Date(), category: "todo" };
+    const taskInfo = {
+      ...data,
+      date: new Date(),
+      category: "todo",
+      user: { name: user?.displayName, email: user?.email },
+    };
     console.log("Task Added:", taskInfo);
     // Save task to backend or local storage (if needed)
     try {
@@ -34,15 +42,12 @@ const AddTask = () => {
             type="text"
             {...register("title", {
               required: "Title is required",
-              maxLength: 50,
+              maxLength: { value: 50, message: "Max length exceeded" },
             })}
             className="w-full p-2 border rounded focus:outline-none focus:ring-2 focus:ring-blue-400"
           />
           {errors.title && (
             <p className="text-red-500 text-sm">{errors.title.message}</p>
-          )}
-          {errors.title && errors.title.type === "maxLength" && (
-            <p className="text-red-500 text-sm">Max length exceeded</p>
           )}
         </div>
 

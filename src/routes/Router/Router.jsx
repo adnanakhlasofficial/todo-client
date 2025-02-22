@@ -3,6 +3,7 @@ import MainLayout from "../../layouts/MainLayout";
 import Home from "../../pages/Home/Home";
 import AddTask from "../../pages/AddTask/AddTask";
 import TaskBoard from "../../pages/TaskBoard/TaskBoard";
+import PrivateRoute from "../PrivateRoute/PrivateRoute";
 
 const router = createBrowserRouter([
   {
@@ -15,11 +16,19 @@ const router = createBrowserRouter([
       },
       {
         path: "/add-task",
-        element: <AddTask />,
+        element: (
+          <PrivateRoute>
+            <AddTask />
+          </PrivateRoute>
+        ),
       },
       {
         path: "/task-board",
-        element: <TaskBoard />,
+        element: (
+          <PrivateRoute>
+            <TaskBoard />
+          </PrivateRoute>
+        ),
       },
     ],
   },

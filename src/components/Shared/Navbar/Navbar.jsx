@@ -51,18 +51,26 @@ const Navbar = () => {
       <div>
         <ul className="flex items-center gap-8">
           <li>
-            <NavLink to="/">Home</NavLink>
+            <NavLink className="font-semibold" to="/">
+              Home
+            </NavLink>
           </li>
           <li>
-            <NavLink to="/">Contact</NavLink>
+            <NavLink className="font-semibold" to="/">
+              Contact
+            </NavLink>
           </li>
           {user && (
             <>
               <li>
-                <NavLink to="/add-task">Add Task</NavLink>
+                <NavLink className="font-semibold" to="/add-task">
+                  Add Task
+                </NavLink>
               </li>
               <li>
-                <NavLink to="/task-board">Task Board</NavLink>
+                <NavLink className="font-semibold" to="/task-board">
+                  Task Board
+                </NavLink>
               </li>
             </>
           )}

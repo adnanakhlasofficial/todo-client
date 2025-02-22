@@ -2,6 +2,7 @@ import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
 import axios from "axios";
 import toast from "react-hot-toast";
 import { format } from "date-fns";
+import { MdDelete } from "react-icons/md"; // Import delete icon
 
 const TaskBoard = () => {
   const queryClient = useQueryClient();
@@ -30,6 +31,7 @@ const TaskBoard = () => {
     },
   });
 
+  // Mutation for updating task status
   const updateTaskStatus = useMutation({
     mutationFn: async ({ id, newStatus }) => {
       await axios.patch(`${import.meta.env.VITE_API_URL}/tasks/${id}`, {
@@ -42,6 +44,20 @@ const TaskBoard = () => {
     },
     onError: () => {
       toast.error("Failed to update task status.");
+    },
+  });
+
+  // Mutation for deleting a task
+  const deleteTask = useMutation({
+    mutationFn: async (id) => {
+      await axios.delete(`${import.meta.env.VITE_API_URL}/tasks/${id}`);
+    },
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ["tasks"] });
+      toast.success("Task deleted!");
+    },
+    onError: () => {
+      toast.error("Failed to delete task.");
     },
   });
 
@@ -63,7 +79,18 @@ const TaskBoard = () => {
             {tasks
               .filter((task) => task.category === category.status)
               .map((task) => (
-                <div key={task._id} className="bg-white p-4 rounded-lg shadow">
+                <div
+                  key={task._id}
+                  className="bg-white p-4 rounded-lg shadow relative"
+                >
+                  {/* Delete Button */}
+                  <button
+                    className="absolute top-2 right-2 text-red-500 hover:text-red-700 cursor-pointer"
+                    onClick={() => deleteTask.mutate(task._id)}
+                  >
+                    <MdDelete size={20} />
+                  </button>
+
                   <div className="flex items-center space-x-2 mb-2">
                     <h3 className="text-sm">{task._id}</h3>
                   </div>

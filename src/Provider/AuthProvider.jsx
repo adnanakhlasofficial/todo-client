@@ -2,10 +2,11 @@ import {
   GoogleAuthProvider,
   onAuthStateChanged,
   signInWithPopup,
-} from 'firebase/auth';
-import { createContext, useEffect, useState } from 'react';
-import auth from '../firebase/firebase.config';
-import PropTypes from 'prop-types';
+  signOut,
+} from "firebase/auth";
+import { createContext, useEffect, useState } from "react";
+import auth from "../firebase/firebase.config";
+import PropTypes from "prop-types";
 
 // eslint-disable-next-line react-refresh/only-export-components
 export const AuthContext = createContext();
@@ -19,6 +20,10 @@ const AuthProvider = ({ children }) => {
   const googleLogin = () => {
     setLoading(true);
     return signInWithPopup(auth, provider);
+  };
+
+  const logoutUser = () => {
+    return signOut(auth);
   };
 
   useEffect(() => {
@@ -35,6 +40,7 @@ const AuthProvider = ({ children }) => {
     user,
     loading,
     setLoading,
+    logoutUser,
   };
 
   return (

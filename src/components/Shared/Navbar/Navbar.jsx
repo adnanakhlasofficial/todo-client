@@ -55,11 +55,6 @@ const Navbar = () => {
               Home
             </NavLink>
           </li>
-          <li>
-            <NavLink className="font-semibold" to="/">
-              Contact
-            </NavLink>
-          </li>
           {user && (
             <>
               <li>
